@@ -26,12 +26,15 @@ class ETCDWatcher(object):
         self.callback = callback
         self.keyName = key_name
         self.mutex = threading.Lock()
+        self.watch_thread = threading.Thread(target=self.start_watch, daemon=True)
+        self.logger = logging.getLogger(__name__)
 
     def create_client(self):
         self.client = etcd3.Etcd3Client(host=self.endpoints[0], port=self.endpoints[1])
 
     def close(self):
-        self.client.close()
+        self.running = False
+        self.logger.info("ETCD watcher closed")
 
     def set_update_callback(self, callback):
         """
@@ -49,19 +52,17 @@ class ETCDWatcher(object):
         """
         rev = 0
         kv_metadata = self.client.get(self.keyName)
-        if kv_metadata[1] is None:
-            return False
-        else:
+        if kv_metadata[1] is not None:
             resp = kv_metadata[1].response_header
             if resp is not None:
                 rev = int(resp.revision)
-                logging.info("Get revision: %d", rev)
+                self.logger.info("Get revision: %d", rev)
                 rev = rev + 1
 
         new_rev = str(rev)
-        logging.info("Set revision: %s", new_rev)
+        self.logger.info("Set revision: %s", new_rev)
         self.client.put(self.keyName, new_rev)
-        return True
+        return kv_metadata[1] is not None
 
     def start_watch(self):
         """
@@ -70,8 +71,9 @@ class ETCDWatcher(object):
         """
         events_iterator, cancel = self.client.watch(self.keyName)
         for event in events_iterator:
-            print("Event: %s", event)
-            if isinstance(event, etcd3.events.PutEvent) or isinstance(event, etcd3.events.DeleteEvent):
+            if isinstance(event, etcd3.events.PutEvent) or isinstance(
+                event, etcd3.events.DeleteEvent
+            ):
                 self.mutex.acquire()
                 if self.callback is not None:
                     self.callback(event)
@@ -85,4 +87,10 @@ def new_watcher(endpoints, keyname):
     :param keyname:
     :return: a new watcher
     """
-    return ETCDWatcher(endpoints=endpoints, running=True, callback=None, key_name=keyname)
+    etcd = ETCDWatcher(
+        endpoints=endpoints, running=True, callback=None, key_name=keyname
+    )
+    etcd.create_client()
+    etcd.watch_thread.start()
+    etcd.logger.info("ETCD watcher started")
+    return etcd
