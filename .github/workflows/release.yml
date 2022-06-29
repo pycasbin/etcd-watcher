@@ -78,7 +78,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install coveralls
+          pip install coveralls==2.1.2
           pip install coverage
 
       - name: Run tests
