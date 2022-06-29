@@ -1,9 +1,9 @@
 name: build
 on:
   push:
-    branches: [ master, fix_ci ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, fix_ci ]
+    branches: [ master ]
 
 jobs:
   test:
