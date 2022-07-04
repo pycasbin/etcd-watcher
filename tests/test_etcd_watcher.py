@@ -55,7 +55,7 @@ class TestConfig(TestCase):
             ["jack", "data4", "read"],
             ["katy", "data4", "write"],
             ["leyo", "data4", "read"],
-            ["ham", "data4", "write"]
+            ["ham", "data4", "write"],
         ]
         e.add_policies(rules)
         e.remove_policies(rules)
