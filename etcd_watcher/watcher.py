@@ -62,21 +62,21 @@ class ETCDWatcher(object):
 
     def update_for_remove_policy(self, section, ptype, *params):
         message = (
-                "Update for remove policy: " + section + " " + ptype + " " + str(params)
+            "Update for remove policy: " + section + " " + ptype + " " + str(params)
         )
         self.logger.info(message)
         return self.update()
 
     def update_for_remove_filtered_policy(self, section, ptype, field_index, *params):
         message = (
-                "Update for remove filtered policy: "
-                + section
-                + " "
-                + ptype
-                + " "
-                + str(field_index)
-                + " "
-                + str(params)
+            "Update for remove filtered policy: "
+            + section
+            + " "
+            + ptype
+            + " "
+            + str(field_index)
+            + " "
+            + str(params)
         )
         self.logger.info(message)
         return self.update()
@@ -88,14 +88,14 @@ class ETCDWatcher(object):
 
     def update_for_add_policies(self, section, ptype, *params):
         message = (
-                "Update for add policies: " + section + " " + ptype + " " + str(params)
+            "Update for add policies: " + section + " " + ptype + " " + str(params)
         )
         self.logger.info(message)
         return self.update()
 
     def update_for_remove_policies(self, section, ptype, *params):
         message = (
-                "Update for remove policies: " + section + " " + ptype + " " + str(params)
+            "Update for remove policies: " + section + " " + ptype + " " + str(params)
         )
         self.logger.info(message)
         return self.update()
