@@ -14,7 +14,9 @@
 
 import logging
 import threading
+import time
 
+import casbin
 import etcd3
 
 
@@ -50,19 +52,38 @@ class ETCDWatcher(object):
         """
         calls the update callback of other instances to synchronize their policy
         """
-        rev = 0
-        kv_metadata = self.client.get(self.keyName)
-        if kv_metadata[1] is not None:
-            resp = kv_metadata[1].response_header
-            if resp is not None:
-                rev = int(resp.revision)
-                self.logger.info("Get revision: %d", rev)
-                rev = rev + 1
+        self.client.put(self.keyName, str(time.time()))
+        return True
 
-        new_rev = str(rev)
-        self.logger.info("Set revision: %s", new_rev)
-        self.client.put(self.keyName, new_rev)
-        return kv_metadata[1] is not None
+    def update_for_add_policy(self, section, ptype, *params):
+        message = "Update for add policy: " + section + " " + ptype + " " + str(params)
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_remove_policy(self, section, ptype, *params):
+        message = "Update for remove policy: " + section + " " + ptype + " " + str(params)
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_remove_filtered_policy(self, sec, ptype, field_index, *params):
+        message = "Update for remove filtered policy: " + sec + " " + ptype + " " + str(field_index) + " " + str(params)
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_save_policy(self, model: casbin.Model):
+        message = "Update for save policy: " + model.to_text()
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_add_policies(self, section, ptype, *params):
+        message = "Update for add policies: " + section + " " + ptype + " " + str(params)
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_remove_policies(self, section, ptype, *params):
+        message = "Update for remove policies: " + section + " " + ptype + " " + str(params)
+        self.logger.info(message)
+        return self.update()
 
     def start_watch(self):
         """
@@ -72,7 +93,7 @@ class ETCDWatcher(object):
         events_iterator, cancel = self.client.watch(self.keyName)
         for event in events_iterator:
             if isinstance(event, etcd3.events.PutEvent) or isinstance(
-                event, etcd3.events.DeleteEvent
+                    event, etcd3.events.DeleteEvent
             ):
                 self.mutex.acquire()
                 if self.callback is not None:

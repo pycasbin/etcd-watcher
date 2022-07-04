@@ -47,5 +47,15 @@ class TestConfig(TestCase):
             get_examples("rbac_model.conf"), get_examples("rbac_policy.csv")
         )
         e.set_watcher(watcher)
-        # will see log of update in call back function
         e.save_policy()
+        # related update function not be called in py-casbin yet
+        e.add_policy("eve", "data3", "read")
+        e.remove_policy("eve", "data3", "read")
+        rules = [
+            ["jack", "data4", "read"],
+            ["katy", "data4", "write"],
+            ["leyo", "data4", "read"],
+            ["ham", "data4", "write"]
+        ]
+        e.add_policies(rules)
+        e.remove_policies(rules)
