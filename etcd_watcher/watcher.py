@@ -108,7 +108,7 @@ class ETCDWatcher(object):
         events_iterator, cancel = self.client.watch(self.keyName)
         for event in events_iterator:
             if isinstance(event, etcd3.events.PutEvent) or isinstance(
-                    event, etcd3.events.DeleteEvent
+                event, etcd3.events.DeleteEvent
             ):
                 self.mutex.acquire()
                 if self.callback is not None:
