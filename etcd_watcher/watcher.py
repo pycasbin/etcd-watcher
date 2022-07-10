@@ -14,7 +14,9 @@
 
 import logging
 import threading
+import time
 
+import casbin
 import etcd3
 
 
@@ -48,21 +50,96 @@ class ETCDWatcher(object):
 
     def update(self):
         """
-        calls the update callback of other instances to synchronize their policy
+        update the policy
         """
-        rev = 0
-        kv_metadata = self.client.get(self.keyName)
-        if kv_metadata[1] is not None:
-            resp = kv_metadata[1].response_header
-            if resp is not None:
-                rev = int(resp.revision)
-                self.logger.info("Get revision: %d", rev)
-                rev = rev + 1
+        self.client.put(self.keyName, str(time.time()))
+        return True
 
-        new_rev = str(rev)
-        self.logger.info("Set revision: %s", new_rev)
-        self.client.put(self.keyName, new_rev)
-        return kv_metadata[1] is not None
+    def update_for_add_policy(self, section, ptype, *params):
+        """
+        update for add policy
+        :param section: section
+        :param ptype:   policy type
+        :param params:  other params
+        :return:    True if updated
+        """
+        message = "Update for add policy: " + section + " " + ptype + " " + str(params)
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_remove_policy(self, section, ptype, *params):
+        """
+        update for remove policy
+        :param section: section
+        :param ptype:   policy type
+        :param params:  other params
+        :return:    True if updated
+        """
+        message = (
+            "Update for remove policy: " + section + " " + ptype + " " + str(params)
+        )
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_remove_filtered_policy(self, section, ptype, field_index, *params):
+        """
+        update for remove filtered policy
+        :param section: section
+        :param ptype:   policy type
+        :param field_index: field index
+        :param params: other params
+        :return:
+        """
+        message = (
+            "Update for remove filtered policy: "
+            + section
+            + " "
+            + ptype
+            + " "
+            + str(field_index)
+            + " "
+            + str(params)
+        )
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_save_policy(self, model: casbin.Model):
+        """
+        update for save policy
+        :param model: casbin model
+        :return:
+        """
+        message = "Update for save policy: " + model.to_text()
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_add_policies(self, section, ptype, *params):
+        """
+        update for add policies
+        :param section: section
+        :param ptype:   policy type
+        :param params:  other params
+        :return:
+        """
+        message = (
+            "Update for add policies: " + section + " " + ptype + " " + str(params)
+        )
+        self.logger.info(message)
+        return self.update()
+
+    def update_for_remove_policies(self, section, ptype, *params):
+        """
+        update for remove policies
+        :param section: section
+        :param ptype:   policy type
+        :param params:  other params
+        :return:
+        """
+        message = (
+            "Update for remove policies: " + section + " " + ptype + " " + str(params)
+        )
+        self.logger.info(message)
+        return self.update()
 
     def start_watch(self):
         """
