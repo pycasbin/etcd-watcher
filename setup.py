@@ -18,7 +18,7 @@ with open("README.md", "r") as readme_file:
     readme = readme_file.read()
 
 setup(
-    name="casbin-etcd-watcher",
+    name="casbin_etcd_watcher",
     author="nekotoxin",
     author_email="nekotoxin@gmail.com",
     description="Casbin role watcher to be used for monitoring updates to policies for PyCasbin",
