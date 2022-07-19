@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+## [1.0.1](https://github.com/pycasbin/etcd-watcher/compare/v1.0.0...v1.0.1) (2022-07-19)
+
+
+### Bug Fixes
+
+* add needed files for release info ([#12](https://github.com/pycasbin/etcd-watcher/issues/12)) ([4f51150](https://github.com/pycasbin/etcd-watcher/commit/4f51150e95aa5aae5180d93e4124f6e3e14e5f34))
+* update setup name to casbin_etcd_watcher ([#15](https://github.com/pycasbin/etcd-watcher/issues/15)) ([0b38a58](https://github.com/pycasbin/etcd-watcher/commit/0b38a582f88148c98139c6c0b5b2f7699961b069))
+
 # 1.0.0 (2022-07-18)
 
 
