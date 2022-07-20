@@ -1,7 +1,4 @@
 casbin==1.16.8
 etcd3==0.12.0
-grpcio==1.47.0
 protobuf==3.19.0
-simpleeval==0.9.12
-six==1.16.0
-tenacity==8.0.1
+

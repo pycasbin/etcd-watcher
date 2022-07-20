@@ -1,6 +1,6 @@
 # etcd-watcher
 
-[![tests](https://github.com/pycasbin/etcd-watcher/actions/workflows/release.yml/badge.svg)](https://github.com/pycasbin/etcd-watcher/actions/workflows/release.yml)[![Coverage Status](https://coveralls.io/repos/github/pycasbin/etcd-watcher/badge.svg)](https://coveralls.io/github/pycasbin/etcd-watcher)[![Version](https://img.shields.io/pypi/v/casbin-etcd-watcher.svg)](https://pypi.org/project/casbin-etcd-watcher/)[![Download](https://img.shields.io/pypi/dm/casbin-etcd-watcher.svg)](https://pypi.org/project/casbin-etcd-watcher/)[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/casbin/lobby)
+[![tests](https://github.com/pycasbin/etcd-watcher/actions/workflows/release.yml/badge.svg)](https://github.com/pycasbin/etcd-watcher/actions/workflows/release.yml) [![Coverage Status](https://coveralls.io/repos/github/pycasbin/etcd-watcher/badge.svg)](https://coveralls.io/github/pycasbin/etcd-watcher) [![Version](https://img.shields.io/pypi/v/casbin-etcd-watcher.svg)](https://pypi.org/project/casbin-etcd-watcher/) [![Download](https://img.shields.io/pypi/dm/casbin-etcd-watcher.svg)](https://pypi.org/project/casbin-etcd-watcher/) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/casbin/lobby)
 
 Etcd Watcher is the [Etcd](https://github.com/coreos/etcd) watcher for [pycasbin](https://github.com/casbin/pycasbin). With this library, Casbin can synchronize the policy with the database in multiple enforcer instances.
 
