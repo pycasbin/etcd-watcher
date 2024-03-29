@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.1.0](https://github.com/pycasbin/etcd-watcher/compare/v1.0.2...v1.1.0) (2024-03-29)
+
+
+### Features
+
+* upgrade CI Node.js version to 20 ([b2cd269](https://github.com/pycasbin/etcd-watcher/commit/b2cd269b389b14285cc61417ff96a1e6914b4e8a))
+
 ## [1.0.2](https://github.com/pycasbin/etcd-watcher/compare/v1.0.1...v1.0.2) (2022-07-25)
 
 
